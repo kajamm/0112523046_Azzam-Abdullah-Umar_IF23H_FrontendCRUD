@@ -44,3 +44,41 @@ export async function getMahasiswa(): Promise<Mahasiswa[]> {
   const result = await handleResponse<Mahasiswa[]>(response);
   return result.data || [];
 }
+
+export async function createMahasiswa(
+  payload: MahasiswaInput
+): Promise<Mahasiswa> {
+  const response = await fetch(`${API_URL}/mahasiswa`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await handleResponse<Mahasiswa>(response);
+  return result.data as Mahasiswa;
+}
+
+export async function updateMahasiswa(
+  id: number,
+  payload: MahasiswaInput
+): Promise<void> {
+  const response = await fetch(`${API_URL}/mahasiswa/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  await handleResponse(response);
+}
+
+export async function deleteMahasiswa(id: number): Promise<void> {
+  const response = await fetch(`${API_URL}/mahasiswa/${id}`, {
+    method: "DELETE",
+  });
+
+  await handleResponse(response);
+}
