@@ -5,6 +5,7 @@ import {
   getMahasiswa,
   createMahasiswa,
   Mahasiswa,
+  deleteMahasiswa,
 } from "@/lib/api";
 
 import MahasiswaTable from "@/app/components/MahasiswaTable";
@@ -40,6 +41,26 @@ export default function MahasiswaPage() {
     }
   }
 
+  async function handleDelete(id: number) {
+    const confirmDelete = confirm(
+      "Yakin ingin menghapus data ini?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteMahasiswa(id);
+
+      alert("Data berhasil dihapus");
+
+      await loadData();
+    } catch (error) {
+      console.error(error);
+
+      alert("Gagal menghapus data");
+    }
+  }
+  
   return (
     <div>
       <h1>Data Mahasiswa</h1>
@@ -48,7 +69,10 @@ export default function MahasiswaPage() {
 
       <br />
 
-      <MahasiswaTable data={data} />
+      <MahasiswaTable
+        data={data}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

@@ -2,9 +2,13 @@ import { Mahasiswa } from "@/lib/api";
 
 type Props = {
   data: Mahasiswa[];
+  onDelete: (id: number) => void;
 };
 
-export default function MahasiswaTable({ data }: Props) {
+export default function MahasiswaTable({
+  data,
+  onDelete,
+}: Props) {
   return (
     <table border={1} cellPadding={18}>
       <thead>
@@ -14,6 +18,7 @@ export default function MahasiswaTable({ data }: Props) {
           <th>Nama</th>
           <th>Prodi</th>
           <th>Angkatan</th>
+          <th>Aksi</th>
         </tr>
       </thead>
 
@@ -25,6 +30,14 @@ export default function MahasiswaTable({ data }: Props) {
             <td>{mhs.nama}</td>
             <td>{mhs.prodi}</td>
             <td>{mhs.angkatan}</td>
+
+            <td>
+              <button
+                onClick={() => onDelete(mhs.id)}
+              >
+                Hapus
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
